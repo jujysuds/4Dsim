@@ -36,20 +36,16 @@ function [Racc, spos, nmat, nlines, Rtotal, state] = calcmat4D(beamline,extrapar
                     q = [0;tempvector(1);0;tempvector(2)];
                 case 19
                     Rcurr = SOL(beamline(line,3),beamline(line,4));
+                case 20 %{Vertical Wien Filters, matrices in tech note by Volker Z.}
+                    Rcurr = VW(beamline(line,3),beamline(line,4));
+                case 21 %{Horizontal Wien Filters}
+                    Rcurr = HW(beamline(line,3),beamline(line,4));
                 case 44
                     Rcurr = RB(beamline(line,3),beamline(line,4));
                 case 103 
                     %Rcurr = B(beamline(line,4)); %IPMs
-                    %May have act as drift to add noise
-                
                 %case 300 | have to add support for measured transfer mats?
                 
-                %{
-                case 20 {Wien Filters, matrices in tech note by Volker Z.}
-                    Rcurr = WF(beamline(line,3),beamline(line,4));
-                
-                
-                %}
                 otherwise 
                     disp('unsupported code')
             end

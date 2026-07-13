@@ -3,7 +3,7 @@
 clear; 
 
 %Still gotta do something with this- I added the ability to change it in #1
-state0 = [1;0;1;0];
+state0 = [0;0;0;0];
 xmu = state0(1,1); xpmu = state0(2,1); ymu = state0(3,1); ypmu = state0(4,1);
 
 %Current Config: Full Injector File as we have now

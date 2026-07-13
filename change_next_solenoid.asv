@@ -1,8 +1,0 @@
-function change_next_solenoid(beamline, val, parameter)
-    for k=val:length(beamline)
-        if(beamline(k,1) == beamline(val,1))
-            beaml
-        
-        end
-    end
-end
