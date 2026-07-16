@@ -24,7 +24,7 @@ dispmu = 0.025; %arbitrary scale, was going to look for literature data
 %For now, this is true
 strengthspot = 4;
 
-portNum = 8002;
+portNum = 8000;
 s = tcpserver(portNum, 'Timeout', 1e20);
 
 %beamstuff = figure(Name="beamstuff"); hold on;
@@ -58,10 +58,13 @@ while 1
     drawnow;
 
     %Reads server input for beamline adjustments
-    
+    tic
     v = char(s.readline);
+
     %Splits v into tokens, then val tracks position of v in comment array
+    disp(v);
     data = split(v);
+
     switch(length(data))
         
         case 1
@@ -84,6 +87,7 @@ while 1
                     switch(parameter)
                         case 'BDL'
                             s.writeline(strcat(comments(val), ":BDL ", string(beamline(val,strengthspot))));
+                            toc
                         case 'XPOS'
                             s.writeline(strcat(comments(val), ":XPOS ", string(xVals(val))));
                         case 'YPOS'

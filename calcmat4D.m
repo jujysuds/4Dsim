@@ -1,6 +1,6 @@
 %4D (i.e. x- and y-capacities) Analogue to calcmat.m, Jude D.
 
-function [Racc, spos, nmat, nlines, Rtotal, state] = calcmat4D(beamline,extraparams,r0)
+function [Racc, spos, nmat, nlines, Rtotal, state,energy] = calcmat4D(beamline,extraparams,r0)
 
     nlines = size(beamline, 1); nmat = sum(beamline(:,2)) + 1;
     Racc = zeros(4, 4, nmat); Racc(:,:, 1) = eye(4);
@@ -36,14 +36,18 @@ function [Racc, spos, nmat, nlines, Rtotal, state] = calcmat4D(beamline,extrapar
                     q = [0;tempvector(1);0;tempvector(2)];
                 case 19
                     Rcurr = SOL(beamline(line,3),beamline(line,4));
-                case 20 %{Vertical Wien Filters, matrices in tech note by Volker Z.}
+                case 30 %{Vertical Wien Filters, matrices in tech note by Volker Z.}
                     Rcurr = VW(beamline(line,3),beamline(line,4));
-                case 21 %{Horizontal Wien Filters}
+                case 31 %{Horizontal Wien Filters}
                     Rcurr = HW(beamline(line,3),beamline(line,4));
                 case 44
-                    Rcurr = RB(beamline(line,3),beamline(line,4));
+                    phi = beamline(line,4) * pi/180;
+                    rho = beamline(line,3)/phi;
+                    Rcurr = RB2(beamline(line,3),rho);
                 case 103 
                     %Rcurr = B(beamline(line,4)); %IPMs
+                case 200
+                    energy = beamline(line,4);
                 %case 300 | have to add support for measured transfer mats?
                 
                 otherwise 
