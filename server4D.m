@@ -12,7 +12,7 @@ filename = 'input.txt';
 %Generates arrays of beamline components and corresponding names + extraparams
 [beamline, comments, extraparams] = matlab_input(filename);
 
-%Measured initial values for beam
+%Measured initial values for beam, still need emittance \eps
 betaX=0.769; alphaX=-0.692; gammaX=(1+alphaX^2)/betaX;
 betaY=0.559; alphaY=0.221; gammaY=(1+alphaY^2)/betaY;
 sigmaX=[betaX,-alphaX;-alphaX,gammaX]; sigmaY=[betaY,-alphaY;-alphaY,gammaY];
@@ -24,11 +24,10 @@ dispmu = 0.025; %arbitrary scale, was going to look for literature data
 %For now, this is true
 strengthspot = 4;
 
-portNum = 8002;
+portNum = 8000;
 s = tcpserver(portNum, 'Timeout', 1e20);
 
 %beamstuff = figure(Name="beamstuff"); hold on;
-
 
 %-----------Testing performance of this change----------------%
 [Racc, spos, nmat, ~, ~, state,energy] = calcmat4D(beamline,extraparams,state0);

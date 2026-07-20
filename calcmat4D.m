@@ -1,13 +1,14 @@
 %4D (i.e. x- and y-capacities) Analogue to calcmat.m, Jude D.
 
-function [Racc, spos, nmat, nlines, Rtotal, state,energy] = calcmat4D(beamline,extraparams,r0)
+function [Racc, spos, nmat, nlines, Rtotal, state, energy] = calcmat4D(beamline,extraparams,r0)
 
     nlines = size(beamline, 1); nmat = sum(beamline(:,2)) + 1;
     Racc = zeros(4, 4, nmat); Racc(:,:, 1) = eye(4);
     spos = zeros(nmat, 1);
     Rtotal = zeros(4, 4, nmat);Rtotal(:,:,1) = eye(4);
     state = zeros(4,nmat); state(:,1) = r0;
-
+    energy = 0;
+    
     ic = 1;
     for line=1:nlines
         for seg=1:beamline(line,2)
@@ -55,8 +56,7 @@ function [Racc, spos, nmat, nlines, Rtotal, state,energy] = calcmat4D(beamline,e
             end
             Rtotal(:,:,ic) = Rcurr;
             Racc(:,:,ic) = Rcurr * Racc(:,:,ic-1);
-            state(:,ic) = Rcurr * state(:,ic-1);
-            state(:,ic) = state(:,ic) + q;
+            state(:,ic) = Rcurr * state(:,ic-1) + q;
             spos(ic) = spos(ic-1) + beamline(line,3);
         end
     end
