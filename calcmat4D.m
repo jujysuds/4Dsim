@@ -49,7 +49,6 @@ function [Racc, spos, nmat, nlines, Rtotal, state, energy] = calcmat4D(beamline,
                     %Rcurr = B(beamline(line,4)); %IPMs
                 case 200
                     energy = beamline(line,4);
-                %case 300 | have to add support for measured transfer mats?
                 
                 otherwise 
                     disp('unsupported code')
